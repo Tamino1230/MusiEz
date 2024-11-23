@@ -5,8 +5,6 @@ import os
 from mutagen.mp3 import MP3
 from yt_dlp import YoutubeDL
 import random
-from pypresence import Presence
-import time
 
 # pygame mixer init
 pygame.mixer.init()
@@ -20,21 +18,6 @@ repeat_mode = False
 is_playing = False
 default_folder = "downloaded_music"
 shuffle_mode = False
-start_time = 0
-
-CLIENT_ID = '1309941984407977996' 
-RPC = Presence(CLIENT_ID)
-RPC.connect()
-
-def update_presence(song_name, start_time, duration):
-    elapsed_time = int(time.time()) - start_time
-    RPC.update(
-        details=f"Listening to {song_name}",
-        start=start_time,
-        end=start_time + duration - elapsed_time,
-        large_image="musi_ez_large_image",
-        large_text="MusiEz - tamino1230"
-    )
 
 if not os.path.exists(default_folder):
     os.makedirs(default_folder)
@@ -70,7 +53,7 @@ def delete_selected_song():
             stop_sound()
             if playlist:
                 play_next_song()
-
+        
 def download_youtube_mp3():
     url = url_entry.get()
     if url:
@@ -82,8 +65,7 @@ def download_youtube_mp3():
                 'preferredcodec': 'mp3',
                 'preferredquality': '320',
             }],
-            # ffmpeg path
-            'ffmpeg_location': 'ffmpeg-7.1-essentials_build/bin/ffmpeg.exe'  
+            'ffmpeg_location': 'ffmpeg-7.1-essentials_build/bin/ffmpeg.exe'  # ffmpeg path
         }
         try:
             with YoutubeDL(ydl_opts) as ydl:
@@ -93,7 +75,7 @@ def download_youtube_mp3():
             print(f"Error during download or processing: {e}")
 
 def play_sound():
-    global is_playing, start_time
+    global is_playing
     if playlist:
         pygame.mixer.music.load(playlist[current_index])
         pygame.mixer.music.play(loops=0)
@@ -101,16 +83,10 @@ def play_sound():
         time_slider.config(to=song_length)
         is_playing = True
         update_song_info()
-
-        # Update Rich Presence
-        song_name = os.path.basename(playlist[current_index])
-        start_time = int(time.time())
-        update_presence(song_name, start_time, song_length)
-
         root.after(1000, check_song_end)
 
 def play_selected_song(event):
-    global current_index, is_playing, start_time
+    global current_index, is_playing
     if playlist:
         current_selection = song_list.curselection()
         if current_selection:
@@ -164,7 +140,7 @@ def toggle_shuffle():
         random.shuffle(playlist)
 
 def play_next_song():
-    global current_index, is_playing, start_time
+    global current_index, is_playing
     is_playing = False
     if playlist:
         if repeat_mode:
@@ -198,29 +174,12 @@ def get_song_length(song_path):
         return 0
 
 def check_song_end():
-    global is_playing, start_time
+    global is_playing
     if is_playing and not pygame.mixer.music.get_busy():
         play_next_song()
-    else:
-        if is_playing:
-            current_song = os.path.basename(playlist[current_index])
-            song_length = get_song_length(playlist[current_index])
-            elapsed_time = int(time.time()) - start_time
-            update_presence(current_song, start_time, song_length - elapsed_time)
-        else:
-            RPC.clear()  # no rpc when no song
     root.after(1000, check_song_end)
 
-def periodic_update():
-    global start_time
-    if is_playing:
-        current_song = os.path.basename(playlist[current_index])
-        song_length = get_song_length(playlist[current_index])
-        elapsed_time = int(time.time()) - start_time
-        update_presence(current_song, start_time, song_length - elapsed_time)  # re update
-    root.after(15000, periodic_update)  # update
-
-# Main window
+# mainn window
 root = tk.Tk()
 root.title("MusiEz - @tamino1230")
 root.geometry("800x600")
@@ -231,8 +190,8 @@ root.resizable(False, False)
 load_button = tk.Button(root, text="Load Songs", command=load_songs)
 load_button.pack(pady=10)
 
-delete_button = tk.Button(root, text="Delete Selected Song", command=delete_selected_song)
-delete_button.pack(pady=10)
+# delete_button = tk.Button(root, text="Delete Selected Song", command=delete_selected_song)
+# delete_button.pack(pady=10)
 
 song_list = Listbox(root)
 song_list.pack(pady=10, fill=tk.BOTH, expand=True)
@@ -290,5 +249,4 @@ download_button.pack(pady=10)
 # check if song ends
 check_song_end()
 
-# mainloop
 root.mainloop()
