@@ -4,7 +4,7 @@ An Music Destop-Python-App by Tamino1230
 ## Content
 
 1. [About the Project](#about-the-project)
-2. [Keys](#keys)
+2. [Known Issues](#known-issues)
 3. [Installation](#installation)
 4. [License](#license)
 5. [Contakt](#contakt)
