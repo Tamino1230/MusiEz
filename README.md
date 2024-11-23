@@ -19,7 +19,8 @@ An Music Destop-Python-App by Tamino1230
 - Saving
 
 ## Known Issues
-- yet i didnt see any
+- sometimes displaying the wrong song
+Just restart
 
 ## Installation
 
