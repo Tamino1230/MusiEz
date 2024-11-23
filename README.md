@@ -17,6 +17,7 @@ An Music Destop-Python-App by Tamino1230
 - Easily downloading new Songs
 - Easy Managing
 - Saving
+- You can make Playlists by Making a new Folder and Putting the songs in there
 
 ## Known Issues
 - sometimes displaying the wrong song
