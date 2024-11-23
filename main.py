@@ -6,12 +6,12 @@ from mutagen.mp3 import MP3
 from yt_dlp import YoutubeDL
 import random
 
-# Initialize Pygame Mixer
+# pygame mixer init
 pygame.mixer.init()
 
 by = "tamino1230"
 
-# Global Variables
+# global variables
 playlist = []
 current_index = 0
 repeat_mode = False
@@ -40,9 +40,13 @@ def delete_selected_song():
     current_selection = song_list.curselection()
     if current_selection:
         selected_index = current_selection[0]
+        file_to_delete = playlist[selected_index]
         song_list.delete(selected_index)
         del playlist[selected_index]
-        # Update the current index if necessary
+        # delete
+        if os.path.exists(file_to_delete):
+            os.remove(file_to_delete)
+        # update if wanted
         if selected_index < current_index:
             current_index -= 1
         elif selected_index == current_index:
@@ -61,7 +65,7 @@ def download_youtube_mp3():
                 'preferredcodec': 'mp3',
                 'preferredquality': '320',
             }],
-            'ffmpeg_location': 'ffmpeg-7.1-essentials_build/bin/ffmpeg.exe'  # Set the full path to ffmpeg
+            'ffmpeg_location': 'ffmpeg-7.1-essentials_build/bin/ffmpeg.exe'  # ffmpeg path
         }
         try:
             with YoutubeDL(ydl_opts) as ydl:
@@ -175,7 +179,7 @@ def check_song_end():
         play_next_song()
     root.after(1000, check_song_end)
 
-# Create the main window
+# mainn window
 root = tk.Tk()
 root.title("MusiEz - @tamino1230")
 root.geometry("800x600")
@@ -242,7 +246,7 @@ url_entry.pack(pady=10)
 download_button = tk.Button(root, text="Download MP3", command=download_youtube_mp3)
 download_button.pack(pady=10)
 
-# Start checking for song end
+# check if song ends
 check_song_end()
 
 root.mainloop()
