@@ -21,6 +21,8 @@ echo Installing Python packages...
 "%PYTHON_PATH%" -m pip install yt-dlp
 "%PYTHON_PATH%" -m pip install pygame
 "%PYTHON_PATH%" -m pip install mutagen
+"%PYTHON_PATH%" -m pip install pypresence
+
 echo Python packages installed successfully.
 
 :: Check if ffmpeg is installed
