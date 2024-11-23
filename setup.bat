@@ -27,7 +27,7 @@ echo Python packages installed successfully.
 
 :: Check if ffmpeg is in the same directory as the script
 echo Checking for FFmpeg installation in the script directory...
-if exist "%CURRENT_DIR%ffmpeg.exe" (
+if exist "ffmpeg-7.1-essentials_build/bin/ffmpeg.exe" (
     echo FFmpeg is already in the script directory.
 ) else (
     echo FFmpeg is not found in the script directory. Downloading and installing FFmpeg...
