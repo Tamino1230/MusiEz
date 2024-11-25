@@ -7,6 +7,7 @@ import random
 from pypresence import Presence
 import time
 import pygame
+import config
 
 # Pygame mixer init
 pygame.mixer.init()
@@ -18,6 +19,7 @@ playlist = []
 current_index = 0
 repeat_mode = False
 is_playing = False
+print(f"Mady by {config.owner})
 default_folder = "downloaded_music"
 shuffle_mode = False
 start_time = 0
