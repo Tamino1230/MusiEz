@@ -21,6 +21,7 @@ An Music Destop-Python-App by Tamino1230
 
 ## Known Issues
 - sometimes displaying the wrong song
+- In the .bat setup file installing python doesnt work
 Just restart
 
 ## Installation
