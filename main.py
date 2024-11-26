@@ -12,20 +12,28 @@ import config
 # Pygame mixer init
 pygame.mixer.init()
 
-by = "tamino1230"
+if not os.path.exists("config.py"):
+    exit("config.py doesnt exists.")
+else:
+    print("successfull")
+
+by = config.by
+
 
 # Global variables
 playlist = []
 current_index = 0
 repeat_mode = False
 is_playing = False
+bgcolor = config.bgcolor
 # print(f"Made by {config.by})
-default_folder = "downloaded_music"
+default_folder = config.default_folder
 shuffle_mode = False
 start_time = 0
 rich_presence_enabled = True
 original_playlist = []
 last_activity_time = time.time()
+sjksaahd = by
 
 CLIENT_ID = '1309941984407977996'
 RPC = Presence(CLIENT_ID)
@@ -50,13 +58,13 @@ def update_presence(song_name=None, start_time=0, duration=0):
                 details=f"Listening to {song_name} ({mode_str}) | made by tamino1230 on Github <3",
                 start=start_time,
                 end=start_time + duration,
-                large_image="musi_ez_large_image",
+                large_image="play.png",
                 large_text="MusiEz - tamino1230"
             )
         elif song_name and not is_playing:
             RPC.update(
                 details=f"Paused {song_name} | made by tamino1230 on Github <3",
-                large_image="musi_ez_large_image",
+                large_image="paused.png",
                 large_text="MusiEz - tamino1230"
             )
         elif (time.time() - last_activity_time) >= 900:
@@ -69,6 +77,15 @@ def update_presence(song_name=None, start_time=0, duration=0):
             RPC.clear()
     else:
         RPC.clear()
+
+def reconnect_rpc():
+    global last_activity_time
+    last_activity_time = time.time()
+    try:
+        RPC.connect()
+        print("Successfully reconnected with Discord.")
+    except Exception as e:
+        print(f"Error while reconnecting with Discord: {e}")
 
 if not os.path.exists(default_folder):
     os.makedirs(default_folder)
@@ -289,13 +306,24 @@ def periodic_update():
 root = tk.Tk()
 root.title("MusiEz - @tamino1230")
 root.geometry("800x600")
-root.configure(bg="#F791C1")
+root.configure(bg=bgcolor)
 root.iconbitmap("babToma.ico")
 root.resizable(False, False)
 
-# Rich Presence Button
-rich_presence_button = tk.Button(root, text="Rich Presence: ON", command=toggle_rich_presence)
-rich_presence_button.pack(anchor="nw", pady=10)
+if not sjksaahd == "Tamino1230":
+    exit("Wrong Owner in Config.py File")
+else:
+    print("successfull")
+
+# Rich Presence and Reconnect Buttons
+button_frame = tk.Frame(root)
+button_frame.pack(anchor="nw", pady=10)
+
+rich_presence_button = tk.Button(button_frame, text="Rich Presence: ON", command=toggle_rich_presence)
+rich_presence_button.pack(side=tk.LEFT, padx=5)
+
+reconnect_button = tk.Button(button_frame, text="Reconnect", command=reconnect_rpc)
+reconnect_button.pack(side=tk.LEFT, padx=5)
 
 # Load Songs Button
 load_button = tk.Button(root, text="Load Songs", command=load_songs)
