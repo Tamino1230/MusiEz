@@ -390,6 +390,9 @@ url_entry.pack(pady=10)
 download_button = tk.Button(root, text="Download MP3", command=download_youtube_mp3)
 download_button.pack(pady=10)
 
+ow_text = tk.Label(root, text=sjksaahd, font=("Arial", 8))
+ow_text.place(relx=1.0, rely=1.0, anchor="se")
+
 # Check if song ends
 check_song_end()
 
