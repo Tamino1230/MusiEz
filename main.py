@@ -158,7 +158,7 @@ def update_presence(song_name=None, start_time=0, duration=0):
                 if shuffle_mode:
                     mode.append("Shuffle")
                 mode_str = " & ".join(mode) if mode else ""
-                
+
                 max_details_length = 128
                 details_message = f"Listening to {song_name[:64]} ({mode_str}) | made by tamino1230 on Github <3"
                 details_message = details_message[:max_details_length]
