@@ -1,6 +1,8 @@
 @echo off
 setlocal
 
+echo The window will close itself automaticly when its done!
+
 :: path
 set "CURRENT_DIR=%~dp0"
 
@@ -21,7 +23,7 @@ if "%PYTHON_PATH%"=="" (
 :: pip
 echo installation of pip and python packages
 python -m pip install --upgrade pip
-python -m pip install yt-dlp pygame mutagen pypresence websockets flask flask-socketio werkzeug eventlet python-socketio matplotlib
+python -m pip install yt-dlp pygame mutagen pypresence websockets flask flask-socketio werkzeug eventlet python-socketio matplotlib pywin32
 
 
 
@@ -38,5 +40,26 @@ if exist "%CURRENT_DIR%ffmpeg-7.1-essentials_build\bin\ffmpeg.exe" (
     del ffmpeg.zip
     echo FFmpeg successfully installed
 )
+
+set "folderpath=%~dp0"
+
+set "desktop=%USERPROFILE%\Desktop"
+
+set "shortcut=%desktop%\MusiEz - @tamino1230.lnk"
+
+echo Set oWS = WScript.CreateObject("WScript.Shell") > "%temp%\CreateShortcut.vbs"
+echo sLinkFile = "%shortcut%" >> "%temp%\CreateShortcut.vbs"
+echo Set oLink = oWS.CreateShortcut(sLinkFile) >> "%temp%\CreateShortcut.vbs"
+echo oLink.TargetPath = "%folderpath%click and extract me.bat" >> "%temp%\CreateShortcut.vbs"
+echo oLink.WorkingDirectory = "%folderpath%" >> "%temp%\CreateShortcut.vbs"
+echo oLink.IconLocation = "%folderpath%icon/babToma.ico" >> "%temp%\CreateShortcut.vbs"
+echo oLink.Save >> "%temp%\CreateShortcut.vbs"
+
+
+cscript //nologo "%temp%\CreateShortcut.vbs"
+
+del "%temp%\CreateShortcut.vbs"
+
+echo Destopshortcut created
 
 endlocal
