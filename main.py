@@ -10,8 +10,8 @@ import pygame
 import config
 import json
 from collections import defaultdict
-from datetime import datetime
-import matplotlib.pyplot as plt
+
+print("You can hide this window.")
 
 # Pygame mixer init
 pygame.mixer.init()
@@ -36,6 +36,7 @@ rich_presence_enabled = True
 original_playlist = []
 last_activity_time = time.time()
 sjksaahd = by
+record_actions = config.record_actions
 
 CLIENT_ID = '1309941984407977996'
 RPC = Presence(CLIENT_ID)
@@ -45,71 +46,29 @@ try:
 except Exception as e:
     print(f"Error while connecting with discord: {e}")
 
-# Wörterbuch, um die gesamte Wiedergabezeit zu speichern
+# saves
 song_playtimes = defaultdict(int)
 
-def load_playtimes():
-    global song_playtimes
-    if os.path.exists("song_playtimes.json"):
-        with open("song_playtimes.json", "r") as f:
-            song_playtimes = defaultdict(int, json.load(f))
+if record_actions == True:
+    print("Actions are getting Recorded!")
 
-def save_playtimes():
-    with open("song_playtimes.json", "w") as f:
-        json.dump(song_playtimes, f)
+    def load_playtimes():
+        global song_playtimes
+        if os.path.exists("song_playtimes.json"):
+            with open("song_playtimes.json", "r") as f:
+                song_playtimes = defaultdict(int, json.load(f))
 
-def update_presence(song_name=None, start_time=0, duration=0):
-    global last_activity_time
-    if rich_presence_enabled:
-        try:
-            if song_name and is_playing:
-                elapsed_time = int(time.time()) - start_time
-                mode = []
-                if repeat_mode:
-                    mode.append("Repeat")
-                if shuffle_mode:
-                    mode.append("Shuffle")
-                mode_str = " & ".join(mode) if mode else ""
-                
-                # Maximal zulässige Länge von "details"
-                max_details_length = 128
-                details_message = f"Listening to {song_name[:64]} ({mode_str}) | made by tamino1230 on Github <3"
-                details_message = details_message[:max_details_length]
+    def save_playtimes():
+        with open("song_playtimes.json", "w") as f:
+            json.dump(song_playtimes, f)
+else:
+    print("Actions are getting NOT Recorded!")
 
-                # print(f"Generated details: {details_message} (length: {len(details_message)})")  # Debugging
-                RPC.update(
-                    details=details_message,
-                    start=start_time,
-                    end=start_time + duration,
-                    large_image="play.png",
-                    large_text="MusiEz - tamino1230"
-                )
+    def load_playtimes():
+        pass
 
-            elif song_name and not is_playing:
-                max_details_length = 128
-                details_message = f"Paused {song_name[:64]} | made by tamino1230 on Github <3"
-                details_message = details_message[:max_details_length]
-
-                # print(f"Generated details: {details_message} (length: {len(details_message)})")  # Debugging
-                RPC.update(
-                    details=details_message,
-                    large_image="paused.png",
-                    large_text="MusiEz - tamino1230"
-                )
-
-            elif (time.time() - last_activity_time) >= 900:
-                RPC.update(
-                    details="Idle | made by tamino1230 on Github <3",
-                    large_image="musi_ez_large_image",
-                    large_text="MusiEz - tamino1230"
-                )
-            else:
-                RPC.clear()
-
-        except Exception as e:
-            print(f"Error while updating presence: {e}")
-    else:
-        RPC.clear()
+    def save_playtimes():
+        pass
 
 def reconnect_rpc():
     global last_activity_time
@@ -180,21 +139,61 @@ def download_youtube_mp3():
 
 def track_playtime():
     global start_time
-
     if is_playing:
         current_song = os.path.basename(playlist[current_index])
         elapsed_time = int(time.time()) - start_time
         song_playtimes[current_song] += elapsed_time
-
-        # saves
         save_playtimes()
-
-        # actually
         start_time = int(time.time())
-
-    # follow
     root.after(1000, track_playtime)
 
+def update_presence(song_name=None, start_time=0, duration=0):
+    global last_activity_time
+    if rich_presence_enabled:
+        try:
+            if song_name and is_playing:
+                mode = []
+                if repeat_mode:
+                    mode.append("Repeat")
+                if shuffle_mode:
+                    mode.append("Shuffle")
+                mode_str = " & ".join(mode) if mode else ""
+                
+                max_details_length = 128
+                details_message = f"Listening to {song_name[:64]} ({mode_str}) | made by tamino1230 on Github <3"
+                details_message = details_message[:max_details_length]
+
+                elapsed_time = int(time.time()) - start_time
+
+                if elapsed_time < duration:
+                    RPC.update(
+                        details=details_message,
+                        start=start_time,
+                        end=start_time + duration,
+                        large_image="play.png",
+                        large_text="MusiEz - tamino1230"
+                    )
+                else:
+                    RPC.clear()
+            elif song_name and not is_playing:
+                details_message = f"Paused {song_name[:64]} | made by tamino1230 on Github <3"
+                RPC.update(
+                    details=details_message,
+                    large_image="paused.png",
+                    large_text="MusiEz - tamino1230"
+                )
+            elif (time.time() - last_activity_time) >= 900:
+                RPC.update(
+                    details="Idle | made by tamino1230 on Github <3",
+                    large_image="musi_ez_large_image",
+                    large_text="MusiEz - tamino1230"
+                )
+            else:
+                RPC.clear()
+        except Exception as e:
+            print(f"Error while updating presence: {e}")
+    else:
+        RPC.clear()
 
 def play_sound():
     global is_playing, start_time, last_activity_time
@@ -212,10 +211,10 @@ def play_sound():
 
         update_presence(song_name, start_time, song_length)
 
-        # load the saved times
+        # loads spy
         load_playtimes()
 
-        # starts observing
+        # starts spy
         root.after(1000, track_playtime)
 
 def play_selected_song(event):
@@ -228,7 +227,7 @@ def play_selected_song(event):
             play_sound()
 
 def pause_sound():
-    global is_playing, last_activity_time
+    global is_playing, start_time, last_activity_time
     last_activity_time = time.time()
     if is_playing:
         current_song = os.path.basename(playlist[current_index])
@@ -243,12 +242,14 @@ def pause_sound():
 def unpause_sound():
     global is_playing, start_time, last_activity_time
     last_activity_time = time.time()
-    pygame.mixer.music.unpause()
-    is_playing = True
-    song_name = os.path.basename(playlist[current_index])
-    song_length = get_song_length(playlist[current_index])
-    elapsed_time = int(time.time()) - start_time
-    update_presence(song_name, start_time + elapsed_time, song_length - elapsed_time)
+    if not is_playing:
+        pygame.mixer.music.unpause()
+        is_playing = True
+        song_name = os.path.basename(playlist[current_index])
+        song_length = get_song_length(playlist[current_index])
+        elapsed_time = int(time.time()) - start_time
+        start_time = int(time.time()) - elapsed_time
+        update_presence(song_name, start_time, song_length - elapsed_time)
 
 def stop_sound():
     global is_playing, last_activity_time
@@ -369,7 +370,7 @@ root = tk.Tk()
 root.title("MusiEz - @tamino1230")
 root.geometry("800x600")
 root.configure(bg=bgcolor)
-root.iconbitmap("babToma.ico")
+root.iconbitmap("icon/babToma.ico")
 root.resizable(False, False)
 
 if not sjksaahd == "Tamino1230":
