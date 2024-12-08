@@ -21,7 +21,9 @@ if "%PYTHON_PATH%"=="" (
 :: pip
 echo installation of pip and python packages
 python -m pip install --upgrade pip
-python -m pip install yt-dlp pygame mutagen pypresence websockets
+python -m pip install yt-dlp pygame mutagen pypresence websockets flask flask-socketio werkzeug eventlet python-socketio matplotlib
+
+
 
 echo Python-Packets successfully installed
 
