@@ -1,13 +1,13 @@
 @echo off
 setlocal
 
-echo The window will close itself automaticly when its done!
+echo The window will close itself automatically when it's done!
 
 :: path
 set "CURRENT_DIR=%~dp0"
 
 :: check if python is installed
-echo check python
+echo Checking for Python...
 for %%i in (python.exe) do set "PYTHON_PATH=%%~$PATH:i"
 
 if "%PYTHON_PATH%"=="" (
@@ -21,24 +21,21 @@ if "%PYTHON_PATH%"=="" (
 )
 
 :: pip
-echo installation of pip and python packages
+echo Installing pip and Python packages...
 python -m pip install --upgrade pip
 python -m pip install yt-dlp pygame mutagen pypresence websockets flask flask-socketio werkzeug eventlet python-socketio matplotlib pywin32
-
-
-
-echo Python-Packets successfully installed
+echo Python packages successfully installed.
 
 :: check ffmpeg
-echo Checking for ffmeg
+echo Checking for FFmpeg...
 if exist "%CURRENT_DIR%ffmpeg-7.1-essentials_build\bin\ffmpeg.exe" (
-    echo ffmeg is already installed
+    echo FFmpeg is already installed.
 ) else (
-    echo FFmpeg not found. installing...
+    echo FFmpeg not found. Installing...
     curl -L -o ffmpeg.zip https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip
     tar -xf ffmpeg.zip
     del ffmpeg.zip
-    echo FFmpeg successfully installed
+    echo FFmpeg successfully installed.
 )
 
 set "folderpath=%~dp0"
@@ -55,11 +52,10 @@ echo oLink.WorkingDirectory = "%folderpath%" >> "%temp%\CreateShortcut.vbs"
 echo oLink.IconLocation = "%folderpath%icon/babToma.ico" >> "%temp%\CreateShortcut.vbs"
 echo oLink.Save >> "%temp%\CreateShortcut.vbs"
 
-
 cscript //nologo "%temp%\CreateShortcut.vbs"
 
 del "%temp%\CreateShortcut.vbs"
 
-echo Destopshortcut created
+echo Desktop shortcut created.
 
 endlocal
