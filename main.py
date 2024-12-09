@@ -11,8 +11,6 @@ import config
 import json
 from collections import defaultdict
 
-print("You can hide this window.")
-
 # Pygame mixer init
 pygame.mixer.init()
 
@@ -32,11 +30,21 @@ bgcolor = config.bgcolor
 default_folder = config.default_folder
 shuffle_mode = False
 start_time = 0
-rich_presence_enabled = True
+rich_presence_enabled = config.default_discord_rich_presence
 original_playlist = []
 last_activity_time = time.time()
 sjksaahd = by
 record_actions = config.record_actions
+error_message = config.error_message
+show_repeat_shuffle = config.show_repeat_shuffle
+playing_presence = config.playing_presence
+paused_presence = config.paused_presence
+idle_presence = config.idle_presence
+hardcoded_presence = config.hardcoded_presence
+
+playing_custom_text_behind = config.playing_custom_text_behind
+paused_custom_text_behind = config.paused_custom_text_behind
+idle_custom_text_behind = config.idle_custom_text_behind
 
 CLIENT_ID = '1309941984407977996'
 RPC = Presence(CLIENT_ID)
@@ -62,7 +70,7 @@ if record_actions == True:
         with open("song_playtimes.json", "w") as f:
             json.dump(song_playtimes, f)
 else:
-    print("Actions are getting NOT Recorded!")
+    print("Actions are NOT getting Recorded!")
 
     def load_playtimes():
         pass
@@ -153,14 +161,22 @@ def update_presence(song_name=None, start_time=0, duration=0):
         try:
             if song_name and is_playing:
                 mode = []
-                if repeat_mode:
-                    mode.append("Repeat")
-                if shuffle_mode:
-                    mode.append("Shuffle")
-                mode_str = " & ".join(mode) if mode else ""
+                if show_repeat_shuffle == True:
+                    if repeat_mode:
+                        mode.append("Repeat")
+                    if shuffle_mode:
+                        mode.append("Shuffle")
+                    mode_str = " & ".join(mode) if mode else ""
+                else:
+                    if repeat_mode:
+                        mode.append("")
+                    if shuffle_mode:
+                        mode.append("")
+                    mode_str = "".join(mode) if mode else ""
 
                 max_details_length = 128
-                details_message = f"Listening to {song_name[:64]} ({mode_str}) | made by tamino1230 on Github <3"
+                # listning
+                details_message = f"{playing_presence}{song_name[:64]} ({mode_str}){hardcoded_presence}{playing_custom_text_behind}"
                 details_message = details_message[:max_details_length]
 
                 elapsed_time = int(time.time()) - start_time
@@ -176,7 +192,8 @@ def update_presence(song_name=None, start_time=0, duration=0):
                 else:
                     RPC.clear()
             elif song_name and not is_playing:
-                details_message = f"Paused {song_name[:64]} | made by tamino1230 on Github <3"
+                # paused
+                details_message = f"{paused_presence}{song_name[:64]}{hardcoded_presence}{paused_custom_text_behind}"
                 RPC.update(
                     details=details_message,
                     large_image="paused.png",
@@ -184,14 +201,15 @@ def update_presence(song_name=None, start_time=0, duration=0):
                 )
             elif (time.time() - last_activity_time) >= 900:
                 RPC.update(
-                    details="Idle | made by tamino1230 on Github <3",
+                    # idling
+                    details=f"{idle_presence}{hardcoded_presence}{idle_custom_text_behind}",
                     large_image="musi_ez_large_image",
                     large_text="MusiEz - tamino1230"
                 )
             else:
                 RPC.clear()
         except Exception as e:
-            print(f"Error while updating presence: {e}")
+            pass
     else:
         RPC.clear()
 
@@ -365,6 +383,12 @@ def periodic_update():
         update_presence(current_song, start_time, song_length - elapsed_time)
     root.after(15000, periodic_update)
 
+def checker(check, text, custom_error_message):
+    if not check == text:
+        exit(f"Not Sucessfull {custom_error_message}")
+    else:
+        print("Successfull")
+
 # Main window
 root = tk.Tk()
 root.title("MusiEz - @tamino1230")
@@ -373,10 +397,13 @@ root.configure(bg=bgcolor)
 root.iconbitmap("icon/babToma.ico")
 root.resizable(False, False)
 
-if not sjksaahd == "Tamino1230":
-    exit("Wrong Owner in Config.py File")
-else:
-    print("Successfull")
+checker(sjksaahd, "Tamino1230", "Wrong Owner in Config.py File")
+checker(hardcoded_presence, " | made by tamino1230 on GitHub <3", "Wrong hardcoded Presence in Config.py File")
+
+# if not sjksaahd == "Tamino1230":
+#     exit("Wrong Owner in Config.py File")
+# else:
+#     print("Successfull")
 
 # Rich Presence and Reconnect Buttons
 button_frame = tk.Frame(root)
@@ -452,6 +479,8 @@ url_entry.pack(pady=10)
 # Download Button
 download_button = tk.Button(root, text="Download MP3", command=download_youtube_mp3)
 download_button.pack(pady=10)
+
+print("YOU CAN HIDE THIS WINDOW.")
 
 # Check if song ends
 check_song_end()
