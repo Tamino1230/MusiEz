@@ -41,12 +41,20 @@ playing_presence = config.playing_presence
 paused_presence = config.paused_presence
 idle_presence = config.idle_presence
 hardcoded_presence = config.hardcoded_presence
+hardcoded_icon_path = config.hardcoded_icon_path
+hardcoded_root_title = config.hardcoded_root_title
+default_discord_rich_presence = config.default_discord_rich_presence
+hardcoded_geometry = config.hardcoded_geometry
+hardcoded_resizeable = config.hardcoded_resizeable
+
+only_custom_rpc = config.only_custom_rpc
+custom_rpc_text = config.custom_rpc_text
 
 playing_custom_text_behind = config.playing_custom_text_behind
 paused_custom_text_behind = config.paused_custom_text_behind
 idle_custom_text_behind = config.idle_custom_text_behind
 
-CLIENT_ID = '1309941984407977996'
+CLIENT_ID = config.hardcoded_client_id
 RPC = Presence(CLIENT_ID)
 try:
     RPC.connect()
@@ -77,6 +85,11 @@ else:
 
     def save_playtimes():
         pass
+
+if default_discord_rich_presence == True:
+    at_start_rich_button = "ON"
+else:
+    at_start_rich_button = "OFF"
 
 def reconnect_rpc():
     global last_activity_time
@@ -176,9 +189,12 @@ def update_presence(song_name=None, start_time=0, duration=0):
 
                 max_details_length = 128
                 # listning
-                details_message = f"{playing_presence}{song_name[:64]} ({mode_str}){hardcoded_presence}{playing_custom_text_behind}"
-                details_message = details_message[:max_details_length]
-
+                if only_custom_rpc == False:
+                    details_message = f"{playing_presence}{song_name[:64]} ({mode_str}){hardcoded_presence}{playing_custom_text_behind}"
+                    details_message = details_message[:max_details_length]
+                else:
+                    details_message = f"{custom_rpc_text}{hardcoded_presence}"
+                    details_message = details_message[:max_details_length]
                 elapsed_time = int(time.time()) - start_time
 
                 if elapsed_time < duration:
@@ -193,7 +209,10 @@ def update_presence(song_name=None, start_time=0, duration=0):
                     RPC.clear()
             elif song_name and not is_playing:
                 # paused
-                details_message = f"{paused_presence}{song_name[:64]}{hardcoded_presence}{paused_custom_text_behind}"
+                if only_custom_rpc == False:
+                    details_message = f"{paused_presence}{song_name[:64]}{hardcoded_presence}{paused_custom_text_behind}"
+                else:
+                    details_message = f"{custom_rpc_text}{hardcoded_presence}"
                 RPC.update(
                     details=details_message,
                     large_image="paused.png",
@@ -385,31 +404,31 @@ def periodic_update():
 
 def checker(check, text, custom_error_message):
     if not check == text:
-        exit(f"Not Sucessfull {custom_error_message}")
+        exit(f"Not Sucessfull: {custom_error_message}")
     else:
         print("Successfull")
 
 # Main window
 root = tk.Tk()
-root.title("MusiEz - @tamino1230")
-root.geometry("800x600")
+root.title(hardcoded_root_title)
+root.geometry(hardcoded_geometry)
 root.configure(bg=bgcolor)
-root.iconbitmap("icon/babToma.ico")
-root.resizable(False, False)
+root.iconbitmap(hardcoded_icon_path)
+root.resizable(hardcoded_resizeable, hardcoded_resizeable)
 
+checker(hardcoded_resizeable, False, f"Wrong Resizeable is on {hardcoded_resizeable} and not on \"True\"")
+checker(hardcoded_geometry, "800x600", "Wrong Geometry in Config.py")
+checker(hardcoded_root_title, "MusiEz - @tamino1230", "Wrong RootTitle in Config.py")
+checker(hardcoded_icon_path, "icon/babToma.ico", "Wrong Icon Path in config.py file")
 checker(sjksaahd, "Tamino1230", "Wrong Owner in Config.py File")
 checker(hardcoded_presence, " | made by tamino1230 on GitHub <3", "Wrong hardcoded Presence in Config.py File")
-
-# if not sjksaahd == "Tamino1230":
-#     exit("Wrong Owner in Config.py File")
-# else:
-#     print("Successfull")
+checker(CLIENT_ID, "1309941984407977996", "Wrong client-id in config.py")
 
 # Rich Presence and Reconnect Buttons
 button_frame = tk.Frame(root)
 button_frame.pack(anchor="nw", pady=10)
 
-rich_presence_button = tk.Button(button_frame, text="Rich Presence: ON", command=toggle_rich_presence)
+rich_presence_button = tk.Button(button_frame, text=f"Rich Presence: {at_start_rich_button}", command=toggle_rich_presence)
 rich_presence_button.pack(side=tk.LEFT, padx=5)
 
 reconnect_button = tk.Button(button_frame, text="Reconnect", command=reconnect_rpc)
