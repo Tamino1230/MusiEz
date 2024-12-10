@@ -10,9 +10,15 @@ show_repeat_shuffle = True # If False it will not show (Repeat & Shuffle) on Dis
 
 error_message = False # Debugging tool
 
-default_discord_rich_presence = True # If its on False it will not show it on discord but it will still show ON in the Programm
+default_discord_rich_presence = False # 
 
+# do not change
+hardcoded_resizeable = False
+hardcoded_geometry = "800x600"
+hardcoded_root_title = "MusiEz - @tamino1230"
 hardcoded_presence = " | made by tamino1230 on GitHub <3" # Programm will not work if changed
+hardcoded_client_id = '1309941984407977996' # Programm will not work if changed
+hardcoded_icon_path = "icon/babToma.ico" # Programm will not work if changed
 
 # if any problems happen text me on discord: @tamino1230
 
@@ -28,5 +34,9 @@ paused_custom_text_behind = ""
 # Idling:
 idle_presence = f"Idling "
 idle_custom_text_behind = ""
+
+# Only custom rich presence
+only_custom_rpc = False # False on default
+custom_rpc_text = "Exampletext"
 
 # have fun with this "music app"
