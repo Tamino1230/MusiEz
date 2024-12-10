@@ -10,7 +10,7 @@ show_repeat_shuffle = True # If False it will not show (Repeat & Shuffle) on Dis
 
 error_message = False # Debugging tool
 
-default_discord_rich_presence = False # 
+default_discord_rich_presence = True # 
 
 # do not change
 hardcoded_resizeable = False
