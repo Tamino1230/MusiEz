@@ -14,10 +14,10 @@ error_message = False # Debugging tool.
 default_discord_rich_presence = True # default True
 
 # do not change
-hardcoded_config = "config.py" # Programm will not work if changed
-hardcoded_resizeable = False # Programm will not work if changed
-hardcoded_geometry = "800x600" # Programm will not work if changed
-hardcoded_root_title = "MusiEz - @tamino1230" # Programm will not work if changed
+hardcoded_config = "config.py"
+hardcoded_resizeable = False
+hardcoded_geometry = "800x6001"
+hardcoded_root_title = "MusiEz - @tamino1230"
 hardcoded_presence = " | made by tamino1230 on GitHub <3" # Programm will not work if changed
 hardcoded_client_id = '1309941984407977996' # Programm will not work if changed
 hardcoded_icon_path = "icon/babToma.ico" # Programm will not work if changed
