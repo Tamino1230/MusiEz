@@ -14,11 +14,6 @@ from collections import defaultdict
 # Pygame mixer init
 pygame.mixer.init()
 
-if not os.path.exists("config.py"):
-    exit("config.py doesnt exists.")
-else:
-    print("Successfull")
-
 by = config.by
 
 # Global variables
@@ -46,6 +41,16 @@ hardcoded_root_title = config.hardcoded_root_title
 default_discord_rich_presence = config.default_discord_rich_presence
 hardcoded_geometry = config.hardcoded_geometry
 hardcoded_resizeable = config.hardcoded_resizeable
+hardcoded_config = config.hardcoded_config
+
+# errors
+errorcounter = 0
+
+
+def erroradd():
+    global errorcounter
+
+    errorcounter = errorcounter + 1
 
 only_custom_rpc = config.only_custom_rpc
 custom_rpc_text = config.custom_rpc_text
@@ -58,15 +63,22 @@ CLIENT_ID = config.hardcoded_client_id
 RPC = Presence(CLIENT_ID)
 try:
     RPC.connect()
-    print("Successfully connected with discord.")
+    if error_message == True:
+        print("Successfully connected with discord.")
+    else:
+        pass
 except Exception as e:
-    print(f"Error while connecting with discord: {e}")
+    if error_message == True:
+        print(f"Error while connecting with discord: {e}")
+    else:
+        pass
 
 # saves
 song_playtimes = defaultdict(int)
 
 if record_actions == True:
-    print("Actions are getting Recorded!")
+    if error_message == True:
+        print("Actions are getting Recorded!")
 
     def load_playtimes():
         global song_playtimes
@@ -174,7 +186,7 @@ def update_presence(song_name=None, start_time=0, duration=0):
         try:
             if song_name and is_playing:
                 mode = []
-                if show_repeat_shuffle == True:
+                if show_repeat_shuffle:
                     if repeat_mode:
                         mode.append("Repeat")
                     if shuffle_mode:
@@ -188,8 +200,8 @@ def update_presence(song_name=None, start_time=0, duration=0):
                     mode_str = "".join(mode) if mode else ""
 
                 max_details_length = 128
-                # listning
-                if only_custom_rpc == False:
+                # listening
+                if not only_custom_rpc:
                     details_message = f"{playing_presence}{song_name[:64]} ({mode_str}){hardcoded_presence}{playing_custom_text_behind}"
                     details_message = details_message[:max_details_length]
                 else:
@@ -198,6 +210,8 @@ def update_presence(song_name=None, start_time=0, duration=0):
                 elapsed_time = int(time.time()) - start_time
 
                 if elapsed_time < duration:
+                    if error_message == True:
+                        print(f"Generated message: {details_message}")
                     RPC.update(
                         details=details_message,
                         start=start_time,
@@ -209,28 +223,38 @@ def update_presence(song_name=None, start_time=0, duration=0):
                     RPC.clear()
             elif song_name and not is_playing:
                 # paused
-                if only_custom_rpc == False:
+                if not only_custom_rpc:
                     details_message = f"{paused_presence}{song_name[:64]}{hardcoded_presence}{paused_custom_text_behind}"
                 else:
                     details_message = f"{custom_rpc_text}{hardcoded_presence}"
+                if error_message == True:
+                    print(f"Generated message: {details_message}")
                 RPC.update(
                     details=details_message,
                     large_image="paused.png",
                     large_text="MusiEz - tamino1230"
                 )
             elif (time.time() - last_activity_time) >= 900:
+                details_message = f"{idle_presence}{hardcoded_presence}{idle_custom_text_behind}"
+                if error_message == True:
+                    print(f"Generated message: {details_message}")
                 RPC.update(
                     # idling
-                    details=f"{idle_presence}{hardcoded_presence}{idle_custom_text_behind}",
+                    details=details_message,
                     large_image="musi_ez_large_image",
                     large_text="MusiEz - tamino1230"
                 )
             else:
                 RPC.clear()
+                if error_message:
+                    print("rpc cleared")
         except Exception as e:
-            pass
+            if error_message:
+                print(e)
     else:
         RPC.clear()
+        if error_message:
+            print("rpc cleared")
 
 def play_sound():
     global is_playing, start_time, last_activity_time
@@ -402,11 +426,52 @@ def periodic_update():
         update_presence(current_song, start_time, song_length - elapsed_time)
     root.after(15000, periodic_update)
 
-def checker(check, text, custom_error_message):
+def error(check, text, custom_error_message, is_path_file):
+    if is_path_file == True:
+        if not os.path.exists(check):
+            if error_message == True:
+                erroradd()
+                print("config.py doesnt exists.")
+                print(f"Exited with \"{errorcounter}\" Errors.")
+                time.sleep(5)
+                exit()
+            else:
+                exit()
+        else:
+            if error_message == True:
+                print("Successfully")
+            else:
+                pass
     if not check == text:
-        exit(f"Not Sucessfull: {custom_error_message}")
+        if error_message == True:
+            print(f"Not Sucessfull: {custom_error_message}")
+            erroradd()
+        else:
+            pass
     else:
-        print("Successfull")
+        if error_message == True:
+            print("Successfull")
+        else:
+            pass
+
+error(hardcoded_config, "config.py", f"config.py doesnt exists", True)
+error(hardcoded_resizeable, False, f"Wrong Resizeable is on {hardcoded_resizeable} and not on \"True\"", False)
+error(hardcoded_geometry, "800x600", f"Wrong Geometry in {hardcoded_config}", False)
+error(hardcoded_root_title, "MusiEz - @tamino1230", f"Wrong RootTitle in {hardcoded_config}", False)
+error(hardcoded_icon_path, "icon/babToma.ico", f"Wrong Icon Path in {hardcoded_config}", False)
+error(sjksaahd, "Tamino1230", f"Wrong Owner in config.py File", False)
+error(hardcoded_presence, f" | made by tamino1230 on GitHub <3", f"Wrong hardcoded Presence in {hardcoded_config}", False)
+error(CLIENT_ID, "1309941984407977996", f"Wrong client-id in {hardcoded_config}", False)
+exiterror = f"Exited with \"{errorcounter}\" Errors."
+
+def close_error():
+    global exiterror
+
+    print(exiterror)
+    time.sleep(5)
+    exit()
+
+close_error()
 
 # Main window
 root = tk.Tk()
@@ -416,13 +481,6 @@ root.configure(bg=bgcolor)
 root.iconbitmap(hardcoded_icon_path)
 root.resizable(hardcoded_resizeable, hardcoded_resizeable)
 
-checker(hardcoded_resizeable, False, f"Wrong Resizeable is on {hardcoded_resizeable} and not on \"True\"")
-checker(hardcoded_geometry, "800x600", "Wrong Geometry in Config.py")
-checker(hardcoded_root_title, "MusiEz - @tamino1230", "Wrong RootTitle in Config.py")
-checker(hardcoded_icon_path, "icon/babToma.ico", "Wrong Icon Path in config.py file")
-checker(sjksaahd, "Tamino1230", "Wrong Owner in Config.py File")
-checker(hardcoded_presence, " | made by tamino1230 on GitHub <3", "Wrong hardcoded Presence in Config.py File")
-checker(CLIENT_ID, "1309941984407977996", "Wrong client-id in config.py")
 
 # Rich Presence and Reconnect Buttons
 button_frame = tk.Frame(root)
