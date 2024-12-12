@@ -536,7 +536,7 @@ volume_frame.pack(pady=10, anchor="w")
 volume_label = tk.Label(volume_frame, text="Volume")
 volume_label.pack(side=tk.LEFT, padx=5)
 
-volume_slider = tk.Scale(volume_frame, from_=0, to=100, orient=tk.HORIZONTAL, command=set_volume)
+volume_slider = tk.Scale(volume_frame, from_=0, to=200, orient=tk.HORIZONTAL, command=set_volume)
 volume_slider.set(50)
 volume_slider.pack(side=tk.LEFT, padx=5)
 
