@@ -10,18 +10,6 @@ import pygame
 import config
 import json
 from collections import defaultdict
-import tkinter as tk
-from tkinter import filedialog, Listbox
-import os
-from mutagen.mp3 import MP3
-from yt_dlp import YoutubeDL
-import random
-from pypresence import Presence
-import time
-import pygame
-import config
-import json
-from collections import defaultdict
 
 # Pygame mixer init
 pygame.mixer.init()
