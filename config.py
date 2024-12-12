@@ -8,16 +8,18 @@ record_actions = True # If you want to record all your actions / False = no / Tr
 
 show_repeat_shuffle = True # If False it will not show (Repeat & Shuffle) on Discord
 
-error_message = False # Debugging tool
+error_message = True # Debugging tool.
+# Put on True if you programm is not starting and when problems apear
 
-default_discord_rich_presence = True # 
+default_discord_rich_presence = True # default True
 
 # do not change
+hardcoded_config = "config.py"
 hardcoded_resizeable = False
-hardcoded_geometry = "800x600"
-hardcoded_root_title = "MusiEz - @tamino1230"
+hardcoded_geometry = "800x6001"
+hardcoded_root_title = "MusiEz - @tamixno1230"
 hardcoded_presence = " | made by tamino1230 on GitHub <3" # Programm will not work if changed
-hardcoded_client_id = '1309941984407977996' # Programm will not work if changed
+hardcoded_client_id = '1309941984407977996x' # Programm will not work if changed
 hardcoded_icon_path = "icon/babToma.ico" # Programm will not work if changed
 
 # if any problems happen text me on discord: @tamino1230
