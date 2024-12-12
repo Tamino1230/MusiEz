@@ -29,6 +29,7 @@ rich_presence_enabled = config.default_discord_rich_presence
 original_playlist = []
 last_activity_time = time.time()
 sjksaahd = by
+max_volume = config.max_volume
 record_actions = config.record_actions
 error_message = config.error_message
 show_repeat_shuffle = config.show_repeat_shuffle
@@ -460,6 +461,14 @@ error(hardcoded_icon_path, "icon/babToma.ico", f"Wrong Icon Path in {hardcoded_c
 error(sjksaahd, "Tamino1230", f"Wrong Owner in config.py File", False)
 error(hardcoded_presence, f" | made by tamino1230 on GitHub <3", f"Wrong hardcoded Presence in {hardcoded_config}", False)
 error(CLIENT_ID, "1309941984407977996", f"Wrong client-id in {hardcoded_config}", False)
+
+if max_volume > 500 or max_volume < 1:
+    print(f"Volume cant be \"{max_volume}\". It need to be under 500 and over 0!")
+    time.sleep(5)
+    exit()
+else:
+    pass
+
 exiterror = f"Exited with \"{errorcounter}\" Errors."
 
 def close_error():
@@ -536,7 +545,7 @@ volume_frame.pack(pady=10, anchor="w")
 volume_label = tk.Label(volume_frame, text="Volume")
 volume_label.pack(side=tk.LEFT, padx=5)
 
-volume_slider = tk.Scale(volume_frame, from_=0, to=200, orient=tk.HORIZONTAL, command=set_volume)
+volume_slider = tk.Scale(volume_frame, from_=0, to=max_volume, orient=tk.HORIZONTAL, command=set_volume)
 volume_slider.set(50)
 volume_slider.pack(side=tk.LEFT, padx=5)
 
