@@ -1,6 +1,6 @@
 by = "Tamino1230"
 
-bgcolor = "#F791C1" # background-color | #F791C1 is a hex color #F791C1
+bgcolor = "lightblue" # background-color | #F791C1 is a hex color #F791C1
 
 default_folder = "downloaded_music" # where the downloaded files are getting added to. (which folder)
 
