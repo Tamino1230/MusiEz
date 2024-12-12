@@ -46,10 +46,8 @@ hardcoded_config = config.hardcoded_config
 # errors
 errorcounter = 0
 
-
 def erroradd():
     global errorcounter
-
     errorcounter = errorcounter + 1
 
 only_custom_rpc = config.only_custom_rpc
@@ -427,6 +425,7 @@ def periodic_update():
     root.after(15000, periodic_update)
 
 def error(check, text, custom_error_message, is_path_file):
+    
     if is_path_file == True:
         if not os.path.exists(check):
             if error_message == True:
@@ -434,20 +433,19 @@ def error(check, text, custom_error_message, is_path_file):
                 print("config.py doesnt exists.")
                 print(f"Exited with \"{errorcounter}\" Errors.")
                 time.sleep(5)
-                exit()
-            else:
-                exit()
+            
         else:
             if error_message == True:
                 print("Successfully")
             else:
                 pass
+              
+
     if not check == text:
         if error_message == True:
             print(f"Not Sucessfull: {custom_error_message}")
-            erroradd()
-        else:
-            pass
+        erroradd()
+        
     else:
         if error_message == True:
             print("Successfull")
