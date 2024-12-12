@@ -8,7 +8,7 @@ record_actions = True # If you want to record all your actions / False = no / Tr
 
 show_repeat_shuffle = True # If False it will not show (Repeat & Shuffle) on Discord
 
-error_message = True # Debugging tool.
+error_message = False # Debugging tool.
 # Put on True if you programm is not starting and when problems apear
 
 default_discord_rich_presence = True # default True
