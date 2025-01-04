@@ -331,7 +331,10 @@ def update_presence(song_name=None, start_time=0, duration=0):
                 max_details_length = 128
                 # listening
                 if not only_custom_rpc:
-                    details_message = f"{playing_presence} {song_name[:64]} ({mode_str}) on {int(volume*100)}% Volume {hardcoded_presence}{playing_custom_text_behind}"
+                    if mode_str == "":
+                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')} {hardcoded_presence}{playing_custom_text_behind}"
+                    else:
+                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')} ({mode_str}) {hardcoded_presence}{playing_custom_text_behind}"
                     details_message = details_message[:max_details_length]
                 else:
                     details_message = f"{custom_rpc_text}{hardcoded_presence}"
