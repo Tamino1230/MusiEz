@@ -38,24 +38,37 @@ if exist "%CURRENT_DIR%ffmpeg-7.1-essentials_build\bin\ffmpeg.exe" (
     echo FFmpeg successfully installed.
 )
 
+:: create executable from main.py
+echo Converting main.py to main.exe...
+pyinstaller --onefile main.py
+
+:: move folder
+echo Moving folder...
+set "source_folder=%~dp0"
+set "target_folder=C:\Path\to\MainFolder"
+
+xcopy /E /I "%source_folder%" "%target_folder%\MusiEz - @tamino1230"
+
+:: create desktop shortcut
 set "folderpath=%~dp0"
-
 set "desktop=%USERPROFILE%\Desktop"
-
 set "shortcut=%desktop%\MusiEz - @tamino1230.lnk"
 
 echo Set oWS = WScript.CreateObject("WScript.Shell") > "%temp%\CreateShortcut.vbs"
 echo sLinkFile = "%shortcut%" >> "%temp%\CreateShortcut.vbs"
 echo Set oLink = oWS.CreateShortcut(sLinkFile) >> "%temp%\CreateShortcut.vbs"
-echo oLink.TargetPath = "%folderpath%main.exe" >> "%temp%\CreateShortcut.vbs"
+echo oLink.TargetPath = "%folderpath%dist\main.exe" >> "%temp%\CreateShortcut.vbs"
 echo oLink.WorkingDirectory = "%folderpath%" >> "%temp%\CreateShortcut.vbs"
 echo oLink.IconLocation = "%folderpath%icon/babToma.ico" >> "%temp%\CreateShortcut.vbs"
 echo oLink.Save >> "%temp%\CreateShortcut.vbs"
 
 cscript //nologo "%temp%\CreateShortcut.vbs"
-
 del "%temp%\CreateShortcut.vbs"
 
-echo Desktop shortcut created.
-
+:: cleanup
+echo Cleaning up...
+rmdir /s /q build
+del main.spec
+echo Done!
+pause
 endlocal
