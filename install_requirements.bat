@@ -98,4 +98,5 @@ if exist main.spec (
 )
 
 echo Done!
+pause
 endlocal
