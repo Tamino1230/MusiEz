@@ -18,3 +18,4 @@ webbrowser
 threading
 keyboard
 importlib
+pyinstaller
