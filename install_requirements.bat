@@ -1,13 +1,11 @@
 @echo off
 setlocal
 
+
 echo The window will close itself automatically when it's done!
 
 :: path
 set "CURRENT_DIR=%~dp0"
-
-:: add exclusion for the specific file main.exe
-powershell Add-MpPreference -ExclusionProcess "%CURRENT_DIR%main.exe"
 
 :: check if main.exe exists
 if exist "%CURRENT_DIR%main.exe" (
@@ -44,9 +42,19 @@ if exist "%CURRENT_DIR%main.exe" (
         echo FFmpeg successfully installed.
     )
 
+    REM Find the path of pyinstaller.exe
+    for /f "delims=" %%A in ('where pyinstaller') do set PYINSTALLER_PATH=%%A
+
+    REM Check if PYINSTALLER_PATH was found
+    if "%PYINSTALLER_PATH%"=="" (
+        echo PyInstaller not found. Please ensure it is installed and added to PATH.
+        exit /b 1
+    )
+
     :: create executable from main.py
     echo Converting main.py to main.exe...
-    pyinstaller --onefile --noconsole main.py
+    "%PYINSTALLER_PATH%" --onefile --noconsole main.py
+
 
     :: Check if main.exe was created
     if exist "%CURRENT_DIR%dist\main.exe" (
@@ -98,5 +106,4 @@ if exist main.spec (
 )
 
 echo Done!
-pause
 endlocal
