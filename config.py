@@ -5,7 +5,7 @@ by = "Tamino1230" #- maker of this program / Programm will not work if changed
 
 #* Quality of Life
 bgcolor = "light blue" #- background-color | #F791C1 is a hex color
-default_folder = "default_folder" #- where the downloaded files are getting added to. (which folder)
+default_folder = "downloaded_music" #- where the downloaded files are getting added to. (which folder)
 
 
 #* Recording Settings
