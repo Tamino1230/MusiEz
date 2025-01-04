@@ -332,9 +332,9 @@ def update_presence(song_name=None, start_time=0, duration=0):
                 # listening
                 if not only_custom_rpc:
                     if mode_str == "":
-                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')} {hardcoded_presence}{playing_custom_text_behind}"
+                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')} on {int(volume*100)}% Volume {hardcoded_presence}{playing_custom_text_behind}"
                     else:
-                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')} ({mode_str}) {hardcoded_presence}{playing_custom_text_behind}"
+                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')} ({mode_str}) on {int(volume*100)}% Volume {hardcoded_presence}{playing_custom_text_behind}"
                     details_message = details_message[:max_details_length]
                 else:
                     details_message = f"{custom_rpc_text}{hardcoded_presence}"
@@ -1037,7 +1037,7 @@ extra_menu.add_command(label="Info and Lyrics (beta)", command=on_search_song_cl
 help_menu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=help_menu)
 help_menu.add_command(label="Show Help", command=show_help)
-# help_menu.add_command(label="Settings (Not working)", command=print("not used"))
+# help_menu.add_command(label="Settings (Not working)", command="not used")
 
 
 #! Message when programm starts
