@@ -37,7 +37,7 @@ You need to have pyton installed correctly.
      - Other ways: Use an older version (bugged) "[click here](https://github.com/Tamino1230/MusiEz/releases/tag/1.1.0)"
      - If you have any questions about that please contact me: [@tamino1230](https://discord.com/users/702893526303637604)
 5. Start the setup.bat file
-6. After it closed open the "click and extract me.bat"
+6. After go to your Desktop and open the "MusiEz - @tamino1230" connection or search "MusiEz - @tamino1230" in your taskbar. And Open it
 
 ## License
 This Project is under the MIT-License. See in the LICENSE-File for more Information.
