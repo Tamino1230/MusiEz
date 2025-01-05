@@ -20,9 +20,9 @@ An Music Destop-Python-App by Tamino1230
 - You can make Playlists by Making a new Folder and Putting the songs in there
 
 ## Known Issues
-- sometimes displaying the wrong song
-- In the .bat setup file installing python doesnt work
-Just restart
+- if you change playlist and have shuffle on it will not be on shuffle - solution: put shuffle off and on
+- 
+or if something else happend just restart
 
 ## Installation
 
@@ -31,8 +31,13 @@ Steps for the Installation
 You need to have pyton installed correctly.
 1. Download the Zip File
 2. Extract it
-3. Start the setup.bat file
-4. After it closed open the "click and extract me.bat"
+3. **Turn off your Windows Defender:
+     Windows 10: Search "Virus" in the Windows search bar -> press "manage settings" on "Settings for Virus- &..." -> Turn off "Real Time Protection"
+     - Why Turn it off? Because you cant create the exe if you run setup...
+     - Other ways: Use an older version (bugged) "[click here](https://github.com/Tamino1230/MusiEz/releases/tag/1.1.0)"
+     - If you have any questions about that please contact me: [@tamino1230](https://discord.com/users/702893526303637604)
+5. Start the setup.bat file
+6. After it closed open the "click and extract me.bat"
 
 ## License
 This Project is under the MIT-License. See in the LICENSE-File for more Information.
