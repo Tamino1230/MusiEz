@@ -31,13 +31,8 @@ Steps for the Installation
 You need to have pyton installed correctly.
 1. Download the Zip File
 2. Extract it
-3. **Turn off your Windows Defender:
-     Windows 10: Search "Virus" in the Windows search bar -> press "manage settings" on "Settings for Virus- &..." -> Turn off "Real Time Protection"
-     - Why Turn it off? Because you cant create the exe if you run setup...
-     - Other ways: Use an older version (bugged) "[click here](https://github.com/Tamino1230/MusiEz/releases/tag/1.1.0)"
-     - If you have any questions about that please contact me: [@tamino1230](https://discord.com/users/702893526303637604)
-5. Start the setup.bat file
-6. After go to your Desktop and open the "MusiEz - @tamino1230" connection or search "MusiEz - @tamino1230" in your taskbar. And Open it
+4. Start the setup.bat file
+5. After go to your Desktop and open the "MusiEz - @tamino1230" connection or search "MusiEz - @tamino1230" in your taskbar. And Open it
 
 ## License
 This Project is under the MIT-License. See in the LICENSE-File for more Information.
