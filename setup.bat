@@ -37,40 +37,6 @@ if exist "%CURRENT_DIR%ffmpeg-7.1-essentials_build\bin\ffmpeg.exe" (
     echo FFmpeg successfully installed.
 )
 
-:: check if main.exe exists
-if exist "%CURRENT_DIR%main.exe" (
-    echo main.exe already exists. Continuing...
-) else (
-    REM Find the path of pyinstaller.exe
-    for /f "delims=" %%A in ('where pyinstaller') do set PYINSTALLER_PATH=%%A
-
-    REM Check if PYINSTALLER_PATH was found
-    if "%PYINSTALLER_PATH%"=="" (
-        echo PyInstaller not found. Please ensure it is installed and added to PATH.
-        exit /b 1
-    )
-
-    :: create executable from main.py
-    echo Converting main.py to main.exe...
-    "%PYINSTALLER_PATH%" --onefile --noconsole main.py
-
-    :: Check if main.exe was created
-    if exist "%CURRENT_DIR%dist\main.exe" (
-        echo main.exe successfully created.
-    ) else (
-        echo main.exe creation failed. Exiting...
-        exit /b
-    )
-)
-
-:: move main.exe to current directory
-echo Moving main.exe to current directory...
-if exist "%CURRENT_DIR%dist\main.exe" (
-    move "%CURRENT_DIR%dist\main.exe" "%CURRENT_DIR%\main.exe"
-) else (
-    echo main.exe could not be found in the dist directory.
-)
-
 set "folderpath=%~dp0"
 set "desktop=%USERPROFILE%\Desktop"
 set "shortcut=%desktop%\MusiEz - @tamino1230.lnk"
@@ -86,22 +52,9 @@ echo oLink.Save >> "%temp%\CreateShortcut.vbs"
 cscript //nologo "%temp%\CreateShortcut.vbs"
 del "%temp%\CreateShortcut.vbs"
 
-:: cleanup
-echo Cleaning up...
-if exist build (
-    rmdir /s /q build
-) else (
-    echo Build directory does not exist.
-)
-if exist main.spec (
-    del main.spec
-) else (
-    echo main.spec file not found.
-)
-
 echo Done!
 endlocal
 echo .
-echo If main.exe is not in the folder please turn off your windows defender.
+echo Have fun!
 echo  (and look into the readme)
 pause
