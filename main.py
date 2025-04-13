@@ -20,12 +20,11 @@ import webbrowser
 import tkinter as tk
 import threading
 import keyboard
-import importlib
 
 
 # import files
-import config
-import show_help as hp
+import scripts.config as config
+import scripts.show_help as hp
 
 
 #! Pygame mixer init
@@ -57,6 +56,9 @@ sleeptimer = config.sleeptimer
 time_format = config.time_format.lower()
 
 original_time_input = config.sleeplength
+
+# var Time
+start_time = time.time()
 
 
 #? turning into different time format
@@ -346,8 +348,8 @@ def update_presence(song_name=None, start_time=0, duration=0):
                         print(f"Generated message: {details_message}")
                     RPC.update(
                         details=details_message,
-                        start=start_time,
-                        end=start_time + duration,
+                        # start=start_time,
+                        # end=start_time + duration,
                         large_image="play.png",
                         large_text="MusiEz - tamino1230"
                     )
@@ -382,11 +384,15 @@ def update_presence(song_name=None, start_time=0, duration=0):
                     print("rpc cleared")
         except Exception as e:
             if error_message:
-                print(e)
+                print(f"RPC Error: {e}")
+            else:
+                print("An error occurred while updating the RPC.")
     else:
         RPC.clear()
         if error_message:
             print("rpc cleared")
+
+    
 
 
 #? plays songs
@@ -746,16 +752,34 @@ def create_hotkeys():
 
 #? searches for song information
 def search_song_info(song_name):
+    from urllib.parse import quote_plus
     try:
-        url = f"https://musicbrainz.org/ws/2/recording/?query={song_name}&fmt=json"
-        response = requests.get(url)
+        # URL encode the song name to prevent issues with special characters
+        encoded_name = quote_plus(song_name)
+        url = f"https://musicbrainz.org/ws/2/recording/?query={encoded_name}&fmt=json"
+        
+        # Make the request
+        headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+    }
+        response = requests.get(url, headers=headers)
         response.raise_for_status()
+        
+        # Parse the response JSON
         data = response.json()
-        if data['recordings']:
+        
+        # Check if any recordings exist
+        if data.get('recordings'):
             recording = data['recordings'][0]
             artist = recording['artist-credit'][0]['artist']['name']
             title = recording['title']
             return artist, title
+        
+        # Handle the case where no recordings are found
+        print("No recordings found for the given song.")
+        return None, None
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
     except Exception as e:
         print(f"Error fetching song info: {e}")
     return None, None
@@ -1030,14 +1054,14 @@ menubar.add_cascade(label="Extra Functions", menu=extra_menu)
 extra_menu.add_command(label="Sleep Mode Start", command=start_sleep)
 extra_menu.add_command(label="Sleep Mode Cancel", command=cancel_sleep)
 extra_menu.add_command(label="Info and Lyrics (beta)", command=on_search_song_click)
-# extra_menu.add_command(label="Mikrofonwiedergabe umschalten", command="toggle_microphone_playback")
+extra_menu.add_command(label="Mikrofonwiedergabe umschalten", command="toggle_microphone_playback")
 
 
 #? help menu
 help_menu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=help_menu)
 help_menu.add_command(label="Show Help", command=show_help)
-# help_menu.add_command(label="Settings (Not working)", command="not used")
+help_menu.add_command(label="Settings (Not working)", command=print("not used"))
 
 
 #! Message when programm starts
