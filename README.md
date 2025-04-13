@@ -58,9 +58,9 @@ MusiEz is a Python-based desktop music application created by **Tamino1230**. It
 
 The application settings can be customized in the `config.py` file. Below are the key configuration options:
 
-- **Background Color**: `bgcolor` (default: `"green"`)
-- **Default Folder**: `default_folder` (default: `"youtube_playlist_3"`)
-- **Max Volume**: `max_volume` (default: `400`)
+- **Background Color**: `bgcolor` (default: `"light_blue"`)
+- **Default Folder**: `default_folder` (default: `"download_folder"`)
+- **Max Volume**: `max_volume` (default: `200`)
 - **Sleep Timer**: `sleeptimer` (default: `True`)
 - **Hotkeys**: Enable or disable hotkeys using `hotkeys_active`.
 
@@ -98,6 +98,7 @@ The following hotkeys are available (if enabled in `config.py`):
 
 - **Incorrect Song Display**: Sometimes the wrong song is displayed in the playlist.
 - **Python Installation in Setup**: The `setup.bat` file may fail to install Python. Restart the setup if this occurs.
+  Please Install Python Manually.
 
 ---
 
