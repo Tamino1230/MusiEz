@@ -3,6 +3,7 @@
 
 
 # import online
+from urllib.parse import quote_plus
 import tkinter as tk
 from tkinter import filedialog, Listbox, ttk, messagebox
 from tkinter import Toplevel
@@ -346,6 +347,10 @@ def update_presence(song_name=None, start_time=0, duration=0):
                 if elapsed_time < duration:
                     if error_message == True:
                         print(f"Generated message: {details_message}")
+                        if details_message == None:
+                            print("Error: details_message is None")
+                        if details_message > 128:
+                            print(f"Error: details_message is too long: {len(details_message)} characters: {details_message}")
                     RPC.update(
                         details=details_message,
                         # start=start_time,
@@ -676,22 +681,38 @@ def error(check, text, custom_error_message, is_path_file):
 
 #? used to open the browser and show discord profile
 def contact_me():
-    webbrowser.open(hardcoded_contact_url)
+    try:
+        webbrowser.open(hardcoded_contact_url)
+    except:
+        if error_message == True:
+            print("Error while opening discord profile link.")
 
 
 #? used to open the browser and joins the discord server
 def join_discord():
-    webbrowser.open(hardcoded_join_url)
+    try:
+        webbrowser.open(hardcoded_join_url)
+    except:
+        if error_message == True:
+            print("Error while opening discord server link.")
 
 
 #? used to open the browser and opens the feedback page
 def feedback_send():
-    webbrowser.open(hardcoded_feedback_url)
+    try:
+        webbrowser.open(hardcoded_feedback_url)
+    except:
+        if error_message == True:
+            print("Error while opening feedback link.")
 
 
 #? used to open the browser and opens the idea page
 def idea_send():
-    webbrowser.open(hardcoded_idea_url)
+    try:
+        webbrowser.open(hardcoded_idea_url)
+    except:
+        if error_message == True:
+            print("Error while opening idea link.")
 
 
 #? for cancling the sleep function
@@ -744,15 +765,14 @@ def create_hotkeys():
     if not hotkeys_active :
         pass
     else:
-        keyboard.add_hotkey(pause_unpause_hotkey, toggle_sound)
-        keyboard.add_hotkey(next_song_hotkey, skip_forward)
-        keyboard.add_hotkey(last_song_hotkey, skip_backwards)
-        keyboard.add_hotkey(sleep_mode_start_hotkey, sleep_function)
+        keyboard.add_hotkey(pause_unpause_hotkey, toggle_sound, timeout=None)
+        keyboard.add_hotkey(next_song_hotkey, skip_forward, timeout=None)
+        keyboard.add_hotkey(last_song_hotkey, skip_backwards, timeout=None)
+        keyboard.add_hotkey(sleep_mode_start_hotkey, sleep_function, timeout=None)
 
 
 #? searches for song information
 def search_song_info(song_name):
-    from urllib.parse import quote_plus
     try:
         # URL encode the song name to prevent issues with special characters
         encoded_name = quote_plus(song_name)
