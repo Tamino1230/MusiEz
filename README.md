@@ -1,6 +1,6 @@
-# MusiEz
+# babTomaMusic
 
-MusiEz is a Python-based desktop music application created by **Tamino1230**. It provides an easy-to-use interface for managing playlists, downloading songs, and integrating with Discord Rich Presence. The application also includes features like hotkeys, sleep timers, and song information retrieval.
+babTomaMusic is a Python-based desktop music application created by **Tamino1230**. It provides an easy-to-use interface for managing playlists, downloading songs, and integrating with Discord Rich Presence. The application also includes features like hotkeys, sleep timers, and song information retrieval.
 
 ---
 
@@ -46,7 +46,7 @@ MusiEz is a Python-based desktop music application created by **Tamino1230**. It
   ```
 
 ### Steps
-1. Download the project as a ZIP file from the [GitHub repository](https://github.com/Tamino1230/MusiEz).
+1. Download the project as a ZIP file from the [GitHub repository](https://github.com/Tamino1230/babTomaMusic).
 2. Extract the ZIP file to a folder of your choice.
 3. Run the `setup.bat` file to install dependencies.
 4. After setup, run the `click and extract me.bat` file.
@@ -113,11 +113,11 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 For questions, feedback, or support, contact **Tamino1230**:
 
 - **Discord**: [@tamino1230](https://discord.com/users/702893526303637604)
-- **GitHub**: [MusiEz Repository](https://github.com/Tamino1230/MusiEz)
+- **GitHub**: [babTomaMusic Repository](https://github.com/Tamino1230/babTomaMusic)
 - **Twitter**: [@NukeTamino](https://twitter.com/NukeTamino)
 
 ---
 
 ## Project Repository
 
-Find the source code and updates at: [https://github.com/Tamino1230/MusiEz](https://github.com/Tamino1230/MusiEz)
+Find the source code and updates at: [https://github.com/Tamino1230/babTomaMusic](https://github.com/Tamino1230/babTomaMusic)
