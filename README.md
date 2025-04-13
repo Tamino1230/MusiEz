@@ -58,7 +58,7 @@ babTomaMusic is a Python-based desktop music application created by **Tamino1230
 
 The application settings can be customized in the `config.py` file. Below are the key configuration options:
 
-- **Background Color**: `bgcolor` (default: `"light_blue"`)
+- **Background Color**: `bgcolor` (default: `"light blue"`)
 - **Default Folder**: `default_folder` (default: `"download_folder"`)
 - **Max Volume**: `max_volume` (default: `200`)
 - **Sleep Timer**: `sleeptimer` (default: `True`)
