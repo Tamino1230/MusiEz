@@ -35,8 +35,8 @@ MusiEz is a Python-based desktop music application created by **Tamino1230**. It
 
 ### Prerequisites
 - Python 3.8 or higher
-- FFmpeg (included in the project)
-- Required Python libraries: (Install automaticly in setup.bat
+- FFmpeg (included in the project) (Install automaticly in setup.bat)
+- Required Python libraries: (Install automaticly in setup.bat)
   ```
   mutagen
   yt-dlp
