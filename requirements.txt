@@ -1,8 +1,5 @@
-tkinter
-requests
 mutagen
 yt-dlp
 pypresence
 pygame
 keyboard
-pyinstaller
