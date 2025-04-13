@@ -10,10 +10,11 @@ babTomaMusic is a Python-based desktop music application created by **Tamino1230
 2. [Installation](#installation)
 3. [Configuration](#configuration)
 4. [Usage](#usage)
-5. [Hotkeys](#hotkeys)
-6. [Known Issues](#known-issues)
-7. [License](#license)
-8. [Contact](#contact)
+5. [Wrapped](#btm-wrapped)
+6. [Hotkeys](#hotkeys)
+7. [Known Issues](#known-issues)
+8. [License](#license)
+9. [Contact](#contact)
 
 ---
 
@@ -82,6 +83,34 @@ For more details, refer to the comments in the `config.py` file.
 - **Share**: Share your current song on Twitter or other platforms.
 
 ---
+
+## bTM Wrapped
+
+The `wrapped.py` script is a standalone feature inspired by Spotify Wrapped, designed specifically for the **babTomaMusic (btM)** app. It provides users with a personalized summary of their music listening habits, offering insights into their most-played songs, total listening time, and more.
+
+Example Output:
+```
+Your Top 10 Songs:
+1. Song A - 669 Minuten
+2. Song B - 555 Minuten
+...
+
+Total Playtime:
+112 hours and 9 minutes
+
+Songs Played Less Than 5 Minutes (Top 5):
+- Song X (4 Minuten)
+...
+
+Your Least Played 5 Songs:
+1. Song Y - 0 Minuten
+
+Unique Songs Played:
+269 unique songs
+```
+
+This feature is now part of a dedicated repository: [bTM-Wrapped](https://github.com/Tamino1230/bTM-Wrapped).
+
 
 ## Hotkeys
 
