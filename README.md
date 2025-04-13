@@ -1,47 +1,115 @@
 # MusiEz
-An Music Destop-Python-App by Tamino1230
 
-## Content
-
-1. [About the Project](#about-the-project)
-2. [Known Issues](#known-issues)
-3. [Installation](#installation)
-4. [License](#license)
-5. [Contakt](#contakt)
-6. [Project](#project)
+MusiEz is a Python-based desktop music application created by **Tamino1230**. It provides an easy-to-use interface for managing playlists, downloading songs, and integrating with Discord Rich Presence. The application also includes features like hotkeys, sleep timers, and song information retrieval.
 
 ---
 
-## About the Project
+## Table of Contents
 
-- Easily downloading new Songs
-- Easy Managing
-- Saving
-- You can make Playlists by Making a new Folder and Putting the songs in there
+1. [Features](#features)
+2. [Installation](#installation)
+3. [Configuration](#configuration)
+4. [Usage](#usage)
+5. [Hotkeys](#hotkeys)
+6. [Known Issues](#known-issues)
+7. [License](#license)
+8. [Contact](#contact)
 
-## Known Issues
-- if you change playlist and have shuffle on it will not be on shuffle - solution: put shuffle off and on
-- 
-or if something else happend just restart
+---
+
+## Features
+
+- **Music Playback**: Play, pause, stop, and skip songs in your playlist.
+- **Playlist Management**: Load songs from folders and manage playlists easily.
+- **Song Downloading**: Download songs directly from YouTube or other supported platforms.
+- **Discord Rich Presence**: Show your current song and playback status on Discord.
+- **Hotkeys**: Control playback using customizable hotkeys.
+- **Sleep Timer**: Automatically stop playback after a specified time.
+- **Song Information**: Fetch song details and lyrics from online sources.
+- **Customizable Settings**: Adjust volume, shuffle, repeat, and more.
+- **Error Handling**: Debugging tools to identify and resolve issues.
+
+---
 
 ## Installation
 
-Steps for the Installation
+### Prerequisites
+- Python 3.8 or higher
+- FFmpeg (included in the project)
+- Required Python libraries (installed automatically)
 
-You need to have pyton installed correctly.
-1. Download the Zip File
-2. Extract it
-4. Start the setup.bat file
-5. After go to your Desktop and open the "MusiEz - @tamino1230" connection or search "MusiEz - @tamino1230" in your taskbar. And Open it
+### Steps
+1. Download the project as a ZIP file from the [GitHub repository](https://github.com/Tamino1230/MusiEz).
+2. Extract the ZIP file to a folder of your choice.
+3. Run the `setup.bat` file to install dependencies.
+4. After setup, run the `click and extract me.bat` file.
+5. Launch the application by running `main.py`.
+
+---
+
+## Configuration
+
+The application settings can be customized in the `config.py` file. Below are the key configuration options:
+
+- **Background Color**: `bgcolor` (default: `"green"`)
+- **Default Folder**: `default_folder` (default: `"youtube_playlist_3"`)
+- **Max Volume**: `max_volume` (default: `400`)
+- **Sleep Timer**: `sleeptimer` (default: `True`)
+- **Hotkeys**: Enable or disable hotkeys using `hotkeys_active`.
+
+For more details, refer to the comments in the `config.py` file.
+
+---
+
+## Usage
+
+### Main Features
+1. **Load Songs**: Use the "Load Songs" option in the menu to load songs from a folder.
+2. **Play Songs**: Double-click a song in the playlist or use the playback controls.
+3. **Download Songs**: Enter a YouTube URL in the input field and click "Download MP3".
+4. **Discord Integration**: Enable or disable Discord Rich Presence using the toggle button.
+5. **Sleep Timer**: Start or cancel the sleep timer from the "Extra Functions" menu.
+
+### Advanced Features
+- **Song Information**: Fetch song details and lyrics using the "Info and Lyrics" option.
+- **Share**: Share your current song on Twitter or other platforms.
+
+---
+
+## Hotkeys
+
+The following hotkeys are available (if enabled in `config.py`):
+
+- **Pause/Unpause**: `Ctrl+F6`
+- **Next Song**: `Ctrl+F7`
+- **Previous Song**: `Ctrl+F5`
+- **Start Sleep Mode**: `Shift+Ctrl+9`
+
+---
+
+## Known Issues
+
+- **Incorrect Song Display**: Sometimes the wrong song is displayed in the playlist.
+- **Python Installation in Setup**: The `setup.bat` file may fail to install Python. Restart the setup if this occurs.
+
+---
 
 ## License
-This Project is under the MIT-License. See in the LICENSE-File for more Information.
+
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
+
+---
 
 ## Contact
-+ Twitter - @NukeTamino
-+ Discord - @tamino1230
-+ Website - / (not yet)
-+ Email - /
 
-## Project
-Project-Repository: https://github.com/Tamino1230/MusiEz
+For questions, feedback, or support, contact **Tamino1230**:
+
+- **Discord**: [@tamino1230](https://discord.com/users/702893526303637604)
+- **GitHub**: [MusiEz Repository](https://github.com/Tamino1230/MusiEz)
+- **Twitter**: [@NukeTamino](https://twitter.com/NukeTamino)
+
+---
+
+## Project Repository
+
+Find the source code and updates at: [https://github.com/Tamino1230/MusiEz](https://github.com/Tamino1230/MusiEz)
