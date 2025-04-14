@@ -343,14 +343,17 @@ def update_presence(song_name=None, start_time=0, duration=0):
                 # listening
                 if not only_custom_rpc:
                     if mode_str == "":
-                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')} on {int(volume*100)}% Volume {hardcoded_presence}{playing_custom_text_behind}"
+                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')}"
                     else:
-                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')} ({mode_str}) on {int(volume*100)}% Volume {hardcoded_presence}{playing_custom_text_behind}"
+                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')} ({mode_str})"
                     details_message = details_message[:max_details_length]
                 else:
                     details_message = f"{custom_rpc_text}{hardcoded_presence}"
                     details_message = details_message[:max_details_length]
                 elapsed_time = int(time.time()) - start_time
+
+                state_text =  f"on {int(volume*100)}% Volume" + hardcoded_presence + playing_custom_text_behind
+                state_text = state_text[:max_details_length]
 
                 if elapsed_time < duration:
                     if error_message == True:
@@ -360,11 +363,12 @@ def update_presence(song_name=None, start_time=0, duration=0):
                         if details_message > 128:
                             print(f"Error: details_message is too long: {len(details_message)} characters: {details_message}")
                     RPC.update(
-                        details=details_message,
+                        details=details_message + "hi",
+                        state=state_text + "state",
                         # start=start_time,
                         # end=start_time + duration,
                         large_image="play.png",
-                        large_text="MusiEz - tamino1230"
+                        large_text="babTomaMusic - tamino1230"
                     )
                 else:
                     RPC.clear()
@@ -379,17 +383,18 @@ def update_presence(song_name=None, start_time=0, duration=0):
                 RPC.update(
                     details=details_message,
                     large_image="paused.png",
-                    large_text="MusiEz - tamino1230"
+                    large_text="babTomaMusic - tamino1230"
                 )
             elif (time.time() - last_activity_time) >= 900:
-                details_message = f"{idle_presence}{hardcoded_presence}{idle_custom_text_behind}"
+                details_message = f"{idle_presence} {idle_custom_text_behind}"
                 if error_message == True:
                     print(f"Generated message: {details_message}")
                 RPC.update(
                     # idling
                     details=details_message,
+                    state=f"on {int(volume*100)}% Volume" + hardcoded_presence + idle_custom_text_behind,
                     large_image="musi_ez_large_image",
-                    large_text="MusiEz - tamino1230"
+                    large_text="babTomaMusic - tamino1230"
                 )
             else:
                 RPC.clear()
@@ -404,9 +409,7 @@ def update_presence(song_name=None, start_time=0, duration=0):
         RPC.clear()
         if error_message:
             print("rpc cleared")
-
-    
-
+            
 
 #? plays songs
 def play_sound():
