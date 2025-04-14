@@ -194,7 +194,15 @@ if record_actions == True: #- if on false it will not record any actions of what
         global song_playtimes
         if os.path.exists("song_playtimes.json"):
             with open("song_playtimes.json", "r") as f:
-                song_playtimes = defaultdict(int, json.load(f))
+                try:
+                    content = f.read().strip()
+                    if content:  # Check if the file is not empty
+                        song_playtimes = defaultdict(int, json.loads(content))
+                    else:
+                        song_playtimes = defaultdict(int)  # Initialize as empty
+                except json.JSONDecodeError:
+                    print("Error: song_playtimes.json contains invalid JSON. Initializing as empty.")
+                    song_playtimes = defaultdict(int)
 
     def save_playtimes():
         with open("song_playtimes.json", "w") as f:
