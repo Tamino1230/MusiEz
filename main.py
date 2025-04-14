@@ -363,8 +363,8 @@ def update_presence(song_name=None, start_time=0, duration=0):
                         if details_message > 128:
                             print(f"Error: details_message is too long: {len(details_message)} characters: {details_message}")
                     RPC.update(
-                        details=details_message + "hi",
-                        state=state_text + "state",
+                        details=details_message,
+                        state=state_text,
                         # start=start_time,
                         # end=start_time + duration,
                         large_image="play.png",
