@@ -10,11 +10,8 @@ set "CURRENT_DIR=%~dp0"
 echo Checking for Python...
 where python >nul 2>nul
 if errorlevel 1 (
-    echo Python is not installed. Getting installed...
-    curl -o python-installer.exe https://www.python.org/ftp/python/3.12.0/python-3.12.0-amd64.exe
-    start /wait python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
-    del python-installer.exe
-    echo Python successfully installed.
+    echo Python is not installed. Please Install it manually
+    exit
 ) else (
     echo Python is already installed.
 )
@@ -39,7 +36,7 @@ if exist "%CURRENT_DIR%ffmpeg-7.1-essentials_build\bin\ffmpeg.exe" (
 
 set "folderpath=%~dp0"
 set "desktop=%USERPROFILE%\Desktop"
-set "shortcut=%desktop%\MusiEz - @tamino1230.lnk"
+set "shortcut=%desktop%\babTomaMusic - @tamino1230.lnk"
 
 echo Set oWS = WScript.CreateObject("WScript.Shell") > "%temp%\CreateShortcut.vbs"
 echo sLinkFile = "%shortcut%" >> "%temp%\CreateShortcut.vbs"
@@ -56,5 +53,3 @@ echo Done!
 endlocal
 echo .
 echo Have fun!
-echo  (and look into the readme)
-pause
