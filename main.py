@@ -95,6 +95,8 @@ pause_unpause_hotkey = config.pause_unpause_hotkey
 next_song_hotkey = config.next_song_hotkey
 last_song_hotkey = config.last_song_hotkey
 sleep_mode_start_hotkey = config.sleep_mode_start_hotkey
+add_volume_hotkey = config.add_volume_hotkey
+remove_volume_hotkey = config.remove_volume_hotkey
 
 
 # var Global Hardcoded Presence
@@ -542,12 +544,20 @@ def skip_backwards():
 
 
 #? changes your song through the slider
-def set_volume(val):
+def set_volume(val, test=False):
     global volume
     global last_activity_time
+    global max_volume
     last_activity_time = time.time()
     volume = float(val) / 100
+    if volume > max_volume / 100:  # Adjusted to ensure it respects max_volume
+        volume = max_volume / 100
+    elif volume < 0:
+        volume = 0
     pygame.mixer.music.set_volume(volume)
+
+    if test:
+        volume_slider.set(volume * 100)
 
 
 #? toggle repeat mode
@@ -771,12 +781,17 @@ def share_on_twitter():
     except Exception as e:
         messagebox.showerror("Error", "You can't share while no Song is Playing")
 
+#? gets the current volume
+def get_current_volume():
+    return pygame.mixer.music.get_volume() * 100
 
 #? creating hotkeys
 def create_hotkeys():
-    if not hotkeys_active :
+    if not hotkeys_active:
         pass
     else:
+        keyboard.add_hotkey(add_volume_hotkey, lambda: set_volume(get_current_volume() + 25, True), timeout=None)
+        keyboard.add_hotkey(remove_volume_hotkey, lambda: set_volume(get_current_volume() - 25, True), timeout=None)
         keyboard.add_hotkey(pause_unpause_hotkey, toggle_sound, timeout=None)
         keyboard.add_hotkey(next_song_hotkey, skip_forward, timeout=None)
         keyboard.add_hotkey(last_song_hotkey, skip_backwards, timeout=None)
@@ -1102,7 +1117,7 @@ help_menu.add_command(label="Show Help", command=show_help)
 
 
 #! Message when programm starts
-print("YOU CAN HIDE THIS WINDOW.")
+print("YOU CAN HIDE THIS WINDOW.") 
 
 #! Creates Hotkeys if want to be used
 create_hotkeys()
