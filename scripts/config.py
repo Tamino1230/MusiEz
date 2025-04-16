@@ -68,7 +68,7 @@ hardcoded_resizeable_hp = False #- Programm will not work if changed
 hardcoded_geometry_hp = "800x600" #- Programm will not work if changed
 hardcoded_root_title_hp = "Helping Window - @tamino1230" #- Programm will not work if changed
 #? Sharing
-hardcoded_github_url = "https://github.com/Tamino1230/MusiEz" #- Programm will not work if changed
+hardcoded_github_url = "https://github.com/Tamino1230/babTomaMusic" #- Programm will not work if changed
 
 #! if any problems happen text me on discord: @tamino1230
 
