@@ -99,6 +99,8 @@ add_volume_hotkey = config.add_volume_hotkey
 remove_volume_hotkey = config.remove_volume_hotkey
 repeat_toggle_hotkey = config.repeat_toggle_hotkey
 
+volume_onhotkey = config.volume_onhotkey
+
 
 # var Global Hardcoded Presence
 #? main.py
@@ -792,8 +794,8 @@ def create_hotkeys():
         pass
     else:
         keyboard.add_hotkey(repeat_toggle_hotkey, toggle_repeat, timeout=None)
-        keyboard.add_hotkey(add_volume_hotkey, lambda: set_volume(get_current_volume() + 25, True), timeout=None)
-        keyboard.add_hotkey(remove_volume_hotkey, lambda: set_volume(get_current_volume() - 25, True), timeout=None)
+        keyboard.add_hotkey(add_volume_hotkey, lambda: set_volume(get_current_volume() + volume_onhotkey, True), timeout=None)
+        keyboard.add_hotkey(remove_volume_hotkey, lambda: set_volume(get_current_volume() - volume_onhotkey, True), timeout=None)
         keyboard.add_hotkey(pause_unpause_hotkey, toggle_sound, timeout=None)
         keyboard.add_hotkey(next_song_hotkey, skip_forward, timeout=None)
         keyboard.add_hotkey(last_song_hotkey, skip_backwards, timeout=None)
