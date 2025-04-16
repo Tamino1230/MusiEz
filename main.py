@@ -97,6 +97,7 @@ last_song_hotkey = config.last_song_hotkey
 sleep_mode_start_hotkey = config.sleep_mode_start_hotkey
 add_volume_hotkey = config.add_volume_hotkey
 remove_volume_hotkey = config.remove_volume_hotkey
+repeat_toggle_hotkey = config.repeat_toggle_hotkey
 
 
 # var Global Hardcoded Presence
@@ -790,6 +791,7 @@ def create_hotkeys():
     if not hotkeys_active:
         pass
     else:
+        keyboard.add_hotkey(repeat_toggle_hotkey, toggle_repeat, timeout=None)
         keyboard.add_hotkey(add_volume_hotkey, lambda: set_volume(get_current_volume() + 25, True), timeout=None)
         keyboard.add_hotkey(remove_volume_hotkey, lambda: set_volume(get_current_volume() - 25, True), timeout=None)
         keyboard.add_hotkey(pause_unpause_hotkey, toggle_sound, timeout=None)

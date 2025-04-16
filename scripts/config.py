@@ -39,6 +39,7 @@ last_song_hotkey = 'ctrl+f5' #- HotKey for last Songs
 sleep_mode_start_hotkey = 'shift+ctrl+9' #- HotKey for sleepmode / stop songs in time
 add_volume_hotkey = 'ctrl+f3' #- HotKey for adding volume
 remove_volume_hotkey = 'ctrl+f2' #- HotKey for removing volume
+repeat_toggle_hotkey = 'ctrl+f4' #- HotKey for repeat toggle
 
 
 # todo soundboard
