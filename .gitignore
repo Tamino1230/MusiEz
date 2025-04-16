@@ -1,3 +1,9 @@
+
+ffmpeg-7.1.1-essentials_build/
+downloaded_music/
+playlists/
+song_playtimes.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

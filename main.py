@@ -3,6 +3,7 @@
 
 
 # import online
+import sys
 from urllib.parse import quote_plus
 import tkinter as tk
 from tkinter import filedialog, Listbox, ttk, messagebox
@@ -343,14 +344,17 @@ def update_presence(song_name=None, start_time=0, duration=0):
                 # listening
                 if not only_custom_rpc:
                     if mode_str == "":
-                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')} on {int(volume*100)}% Volume {hardcoded_presence}{playing_custom_text_behind}"
+                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')}"
                     else:
-                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')} ({mode_str}) on {int(volume*100)}% Volume {hardcoded_presence}{playing_custom_text_behind}"
+                        details_message = f"{playing_presence} {song_name[:64].replace('.mp3', '')} ({mode_str})"
                     details_message = details_message[:max_details_length]
                 else:
                     details_message = f"{custom_rpc_text}{hardcoded_presence}"
                     details_message = details_message[:max_details_length]
                 elapsed_time = int(time.time()) - start_time
+
+                state_text =  f"on {int(volume*100)}% Volume" + hardcoded_presence + playing_custom_text_behind
+                state_text = state_text[:max_details_length]
 
                 if elapsed_time < duration:
                     if error_message == True:
@@ -361,10 +365,11 @@ def update_presence(song_name=None, start_time=0, duration=0):
                             print(f"Error: details_message is too long: {len(details_message)} characters: {details_message}")
                     RPC.update(
                         details=details_message,
+                        state=state_text,
                         # start=start_time,
                         # end=start_time + duration,
                         large_image="play.png",
-                        large_text="MusiEz - tamino1230"
+                        large_text="babTomaMusic - tamino1230"
                     )
                 else:
                     RPC.clear()
@@ -379,17 +384,18 @@ def update_presence(song_name=None, start_time=0, duration=0):
                 RPC.update(
                     details=details_message,
                     large_image="paused.png",
-                    large_text="MusiEz - tamino1230"
+                    large_text="babTomaMusic - tamino1230"
                 )
             elif (time.time() - last_activity_time) >= 900:
-                details_message = f"{idle_presence}{hardcoded_presence}{idle_custom_text_behind}"
+                details_message = f"{idle_presence} {idle_custom_text_behind}"
                 if error_message == True:
                     print(f"Generated message: {details_message}")
                 RPC.update(
                     # idling
                     details=details_message,
+                    state=f"on {int(volume*100)}% Volume" + hardcoded_presence + idle_custom_text_behind,
                     large_image="musi_ez_large_image",
-                    large_text="MusiEz - tamino1230"
+                    large_text="babTomaMusic - tamino1230"
                 )
             else:
                 RPC.clear()
@@ -404,8 +410,6 @@ def update_presence(song_name=None, start_time=0, duration=0):
         RPC.clear()
         if error_message:
             print("rpc cleared")
-
-    
 
 
 #? plays songs
@@ -813,6 +817,7 @@ def search_song_info(song_name):
     return None, None
 
 
+
 #? search for song lyrics
 def search_song_lyrics(artist, title):
     try:
@@ -927,6 +932,11 @@ def close_error():
 #? closes if any errors accure
 close_error()
 
+def reload_config_settings():
+    #! restarting the program
+    python = sys.executable
+    os.execl(python, python, *sys.argv)
+
 
 #! Main window
 root = tk.Tk()
@@ -1040,7 +1050,6 @@ download_button.pack(pady=10)
 #// help_button = tk.Button(root, text="Show Help!", command=show_help)
 #// help_button.pack(pady=10)
 
-
 #! Creates Menubar
 menubar = tk.Menu(root)
 root.config(menu=menubar)
@@ -1049,7 +1058,7 @@ root.config(menu=menubar)
 file_menu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Files", menu=file_menu)
 file_menu.add_command(label="Load Songs", command=load_songs)
-file_menu.add_command(label="Save", command="hi")
+file_menu.add_command(label="Reload Config Settings", command=reload_config_settings)
 file_menu.add_separator()
 file_menu.add_command(label="End Program", command=root.quit)
 
@@ -1082,14 +1091,14 @@ menubar.add_cascade(label="Extra Functions", menu=extra_menu)
 extra_menu.add_command(label="Sleep Mode Start", command=start_sleep)
 extra_menu.add_command(label="Sleep Mode Cancel", command=cancel_sleep)
 extra_menu.add_command(label="Info and Lyrics (beta)", command=on_search_song_click)
-extra_menu.add_command(label="Mikrofonwiedergabe umschalten", command="toggle_microphone_playback")
+# extra_menu.add_command(label="Mikrofonwiedergabe umschalten (working on)", command="toggle_virtual_mic_playback")
 
 
 #? help menu
 help_menu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=help_menu)
 help_menu.add_command(label="Show Help", command=show_help)
-help_menu.add_command(label="Settings (Not working)", command=print("not used"))
+# help_menu.add_command(label="Settings (Not working)", command=print("not used"))
 
 
 #! Message when programm starts
