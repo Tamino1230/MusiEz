@@ -40,7 +40,7 @@ sleep_mode_start_hotkey = 'shift+ctrl+9' #- HotKey for sleepmode / stop songs in
 add_volume_hotkey = 'ctrl+f3' #- HotKey for adding volume
 remove_volume_hotkey = 'ctrl+f2' #- HotKey for removing volume
 repeat_toggle_hotkey = 'ctrl+f4' #- HotKey for repeat toggle
-volume_onhotkey = 25 #- Volume that gets added on hotkey 'add/remove_volume_hotkey'
+volume_onhotkey = 10 #- (Default: 10) Volume that gets added on hotkey 'add/remove_volume_hotkey'
 
 
 # todo soundboard
