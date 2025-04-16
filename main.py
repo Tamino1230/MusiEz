@@ -916,7 +916,7 @@ error(hardcoded_contact_url, "https://discord.com/users/702893526303637604", f"W
 error(hardcoded_join_url, "https://discord.gg/vpApZSjh3H", f"Wrong Discord Join Url in {hardcoded_config}", False)
 error(hardcoded_feedback_url, "https://discord.com/channels/1308085385351397427/1321532070144774215", f"Wrong Discord Feedback Url in {hardcoded_config}", False)
 error(hardcoded_idea_url, "https://discord.com/channels/1308085385351397427/1321532085957165138", f"Wrong Discord Idea Url in {hardcoded_config}", False)
-error(hardcoded_github_url, "https://github.com/Tamino1230/MusiEz", f"Wrong hardcoded Github url in {hardcoded_config}", False)
+error(hardcoded_github_url, "https://github.com/Tamino1230/babTomaMusic", f"Wrong hardcoded Github url in {hardcoded_config}", False)
 #? helping window
 error(hardcoded_resizeable_hp, False, f"Wrong helping resizeable in {hardcoded_config}", False)
 error(hardcoded_geometry_hp, "800x600", f"Wrong helping geometry in {hardcoded_config}", False)
