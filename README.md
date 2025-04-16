@@ -1,5 +1,7 @@
 # babTomaMusic
 
+Please use the [latest Version](https://github.com/Tamino1230/babTomaMusic/releases/latest)
+
 babTomaMusic is a Python-based desktop music application created by **Tamino1230**. It provides an easy-to-use interface for managing playlists, downloading songs, and integrating with Discord Rich Presence. The application also includes features like hotkeys, sleep timers, and song information retrieval.
 
 ---
@@ -44,6 +46,7 @@ babTomaMusic is a Python-based desktop music application created by **Tamino1230
   pypresence
   pygame
   keyboard
+  requests
   ```
 
 ### Steps
