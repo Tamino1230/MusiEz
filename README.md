@@ -46,6 +46,7 @@ babTomaMusic is a Python-based desktop music application created by **Tamino1230
   pypresence
   pygame
   keyboard
+  requests
   ```
 
 ### Steps
