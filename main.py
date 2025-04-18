@@ -317,7 +317,7 @@ def track_playtime():
     global start_time
     if is_playing:
         current_song = os.path.basename(playlist[current_index])
-        current_song = f"weihnachts_plalist\\{current_song}"
+        current_song = f"{current_song}"
         elapsed_time = int(time.time()) - start_time
         song_playtimes[current_song] += elapsed_time
         save_playtimes()
