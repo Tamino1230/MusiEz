@@ -23,7 +23,7 @@ show_repeat_shuffle = True #- If False it will not show (Repeat & Shuffle) on Di
 
 
 #* Audio Settings
-max_volume = 200 #- needs to be under 500 and over 0
+max_volume = 500 #- needs to be under 500 and over 0
 
 sleeplength = 1 #- After how many minutes the program will end itself 
 time_format = "hour" #- Avaible time formats: s; m; h; second; minute; hour;
@@ -37,9 +37,13 @@ pause_unpause_hotkey = 'ctrl+f6' #- HotKey for Pausing/Unpausing Songs
 next_song_hotkey = 'ctrl+f7' #- HotKey next Songs
 last_song_hotkey = 'ctrl+f5' #- HotKey for last Songs
 sleep_mode_start_hotkey = 'shift+ctrl+9' #- HotKey for sleepmode / stop songs in time
+repeat_toggle_hotkey = 'ctrl+f4' #- HotKey for repeat toggle
+
+deactivate_add_remove_volume = True #- If True the add/remove volume hotkeys will not be used due to the Program crashing
+
 add_volume_hotkey = 'ctrl+f3' #- HotKey for adding volume
 remove_volume_hotkey = 'ctrl+f2' #- HotKey for removing volume
-repeat_toggle_hotkey = 'ctrl+f4' #- HotKey for repeat toggle
+
 volume_onhotkey = 10 #- (Default: 10) Volume that gets added on hotkey 'add/remove_volume_hotkey'
 
 

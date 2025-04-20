@@ -98,6 +98,7 @@ sleep_mode_start_hotkey = config.sleep_mode_start_hotkey
 add_volume_hotkey = config.add_volume_hotkey
 remove_volume_hotkey = config.remove_volume_hotkey
 repeat_toggle_hotkey = config.repeat_toggle_hotkey
+deactivate_add_remove_volume = config.deactivate_add_remove_volume
 
 volume_onhotkey = config.volume_onhotkey
 
@@ -302,7 +303,7 @@ def download_and_process_mp3(url):
             'preferredcodec': 'mp3',
             'preferredquality': '320',
         }],
-        'ffmpeg_location': 'ffmpeg-7.1-essentials_build/bin/ffmpeg.exe'
+        'ffmpeg_location': 'ffmpeg-7.1.1-essentials_build/bin/ffmpeg.exe'
     }
     try:
         with YoutubeDL(ydl_opts) as ydl:
@@ -317,7 +318,7 @@ def track_playtime():
     global start_time
     if is_playing:
         current_song = os.path.basename(playlist[current_index])
-        current_song = f"weihnachts_plalist\\{current_song}"
+        current_song = f"{current_song}"
         elapsed_time = int(time.time()) - start_time
         song_playtimes[current_song] += elapsed_time
         save_playtimes()
@@ -560,7 +561,8 @@ def set_volume(val, test=False):
     pygame.mixer.music.set_volume(volume)
 
     if test:
-        volume_slider.set(volume * 100)
+        if deactivate_add_remove_volume == False:
+            volume_slider.set(volume * 100) #- i think this is causing the crashes
 
 
 #? toggle repeat mode
@@ -794,8 +796,9 @@ def create_hotkeys():
         pass
     else:
         keyboard.add_hotkey(repeat_toggle_hotkey, toggle_repeat, timeout=None)
-        keyboard.add_hotkey(add_volume_hotkey, lambda: set_volume(get_current_volume() + volume_onhotkey, True), timeout=None)
-        keyboard.add_hotkey(remove_volume_hotkey, lambda: set_volume(get_current_volume() - volume_onhotkey, True), timeout=None)
+        if deactivate_add_remove_volume == False:
+            keyboard.add_hotkey(add_volume_hotkey, lambda: set_volume(get_current_volume() + volume_onhotkey, True), timeout=None)
+            keyboard.add_hotkey(remove_volume_hotkey, lambda: set_volume(get_current_volume() - volume_onhotkey, True), timeout=None)
         keyboard.add_hotkey(pause_unpause_hotkey, toggle_sound, timeout=None)
         keyboard.add_hotkey(next_song_hotkey, skip_forward, timeout=None)
         keyboard.add_hotkey(last_song_hotkey, skip_backwards, timeout=None)
